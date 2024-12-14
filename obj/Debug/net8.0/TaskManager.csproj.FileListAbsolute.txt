@@ -170,3 +170,4 @@
 /Users/santipapmay/Desktop/TaskManager/obj/Debug/net8.0/TaskManager.pdb
 /Users/santipapmay/Desktop/TaskManager/obj/Debug/net8.0/TaskManager.genruntimeconfig.cache
 /Users/santipapmay/Desktop/TaskManager/obj/Debug/net8.0/ref/TaskManager.dll
+/Users/santipapmay/Desktop/TaskManager/obj/Debug/net8.0/TaskManager.sourcelink.json

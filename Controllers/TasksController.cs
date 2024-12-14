@@ -21,15 +21,32 @@ namespace TaskManager.Controllers
         }
 
         // GET: Tasks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string filterStatus)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null) return Forbid();
 
-            var tasks = await _context.Tasks
-                .Where(t => t.UserId == userId)
-                .ToListAsync();
-            return View(tasks);
+            var tasks = _context.Tasks
+                .Where(t => t.UserId == userId);
+
+            // Filter by status
+            if (!string.IsNullOrEmpty(filterStatus))
+            {
+                bool isCompleted = filterStatus == "completed";
+                tasks = tasks.Where(t => t.IsCompleted == isCompleted);
+            }
+
+            // Sort by due date
+            ViewData["DateSortParam"] = sortOrder == "date" ? "date_desc" : "date";
+            
+            tasks = sortOrder switch
+            {
+                "date" => tasks.OrderBy(t => t.DueDate),
+                "date_desc" => tasks.OrderByDescending(t => t.DueDate),
+                _ => tasks.OrderBy(t => t.DueDate)
+            };
+
+            return View(await tasks.ToListAsync());
         }
 
         // GET: Tasks/Create
@@ -148,43 +165,62 @@ namespace TaskManager.Controllers
         }
     
         // GET: Tasks/Delete/5
-public async Task<IActionResult> Delete(int? id)
-{
-    if (id == null)
-    {
-        return NotFound();
-    }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var task = await _context.Tasks
-        .Where(t => t.Id == id && t.UserId == userId)
-        .FirstOrDefaultAsync();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var task = await _context.Tasks
+                .Where(t => t.Id == id && t.UserId == userId)
+                .FirstOrDefaultAsync();
 
-    if (task == null)
-    {
-        return NotFound();
-    }
+            if (task == null)
+            {
+                return NotFound();
+            }
 
-    return View(task);
-}
+            return View(task);
+        }
 
-// POST: Tasks/Delete/5
-[HttpPost, ActionName("Delete")]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> DeleteConfirmed(int id)
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var task = await _context.Tasks
-        .Where(t => t.Id == id && t.UserId == userId)
-        .FirstOrDefaultAsync();
+        // POST: Tasks/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var task = await _context.Tasks
+                .Where(t => t.Id == id && t.UserId == userId)
+                .FirstOrDefaultAsync();
 
-    if (task != null)
-    {
-        _context.Tasks.Remove(task);
-        await _context.SaveChangesAsync();
-    }
+            if (task != null)
+            {
+                _context.Tasks.Remove(task);
+                await _context.SaveChangesAsync();
+            }
 
-    return RedirectToAction(nameof(Index));
-}
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Tasks/ToggleComplete/5
+        [HttpPost]
+        public async Task<IActionResult> ToggleComplete(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var task = await _context.Tasks
+                .Where(t => t.Id == id && t.UserId == userId)
+                .FirstOrDefaultAsync();
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            task.IsCompleted = !task.IsCompleted;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

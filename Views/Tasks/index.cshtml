@@ -7,41 +7,44 @@
 <h1>Tasks</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="btn-group">
+            <a asp-action="Index" class="btn btn-outline-primary">All</a>
+            <a asp-action="Index" asp-route-filterStatus="active" class="btn btn-outline-primary">Active</a>
+            <a asp-action="Index" asp-route-filterStatus="completed" class="btn btn-outline-primary">Completed</a>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
+            <th>Status</th>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]">
+                    @Html.DisplayNameFor(model => model.DueDate)
+                </a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsCompleted)
-            </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    <form asp-action="ToggleComplete" asp-route-id="@item.Id" method="post">
+                        <input type="checkbox" @(item.IsCompleted ? "checked" : "") onchange="this.form.submit()" />
+                    </form>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsCompleted)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
