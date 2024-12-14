@@ -19,4 +19,277 @@ html {
 
 body {
   margin-bottom: 60px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+  --danger-color: red;
+  --warning-color: orange;
+  --success-color: green;
+  --focus-border: #258cfb;
+}
+
+.text-danger {
+  color: var(--danger-color);
+  font-weight: bold;
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn {
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.alert-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.alert-warning {
+  background-color: var(--warning-color);
+  color: black;
+}
+
+.alert-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.table-danger {
+  background-color: #f8d7da;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  background-color: white;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e9ecef;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--focus-border);
+}
+
+.form-check-input {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-check-input:checked {
+  background-color: var(--focus-border);
+}
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--focus-border);
+}
+
+.form-check-input:hover {
+  border-color: var(--focus-border);
+}
+
+.form-check-input:active {
+  background-color: var(--focus-border);
+  opacity: 0.8;
+}
+
+.m-1 { margin: 0.25rem !important; }
+.m-2 { margin: 0.5rem !important; }
+.m-3 { margin: 1rem !important; }
+.p-1 { padding: 0.25rem !important; }
+.p-2 { padding: 0.5rem !important; }
+.p-3 { padding: 1rem !important; }
+
+body.dark-theme {
+  background-color: #121212;
+  color: #e0e0e0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme .table {
+  background-color: #1e1e1e;
+  border-color: #343a40;
+}
+
+body.dark-theme th {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+body.dark-theme tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+
+body.dark-theme .btn {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-theme .form-control {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: #258cfb;
+  border-bottom: 2px solid #258cfb;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+
+.modal-header, .modal-footer {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+}
+
+@media (max-width: 576px) {
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  position: absolute;
+  bottom: 125%; /* Position above the element */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.arrow-up::after {
+  content: "▲";
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.arrow-down::after {
+  content: "▼";
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
 }

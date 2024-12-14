@@ -4,6 +4,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace TaskManager.Models
 {
+    public enum PriorityLevel
+    {
+        Low,
+        Medium,
+        High
+    }
+
     public class TodoTask
     {
         public int Id { get; set; }
@@ -22,7 +29,10 @@ namespace TaskManager.Models
         public bool IsCompleted { get; set; }
 
         public string? UserId { get; set; }
-        
         public virtual IdentityUser? User { get; set; }
+
+        [Required]
+        [Display(Name = "Priority")]
+        public PriorityLevel Priority { get; set; } = PriorityLevel.Medium;
     }
 }

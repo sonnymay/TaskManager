@@ -18,6 +18,9 @@
             <a asp-action="Index" asp-route-filterStatus="completed" class="btn btn-outline-primary">Completed</a>
         </div>
     </div>
+    <div class="col text-right">
+        <button id="theme-toggle" class="btn btn-secondary">Toggle Theme</button>
+    </div>
 </div>
 
 <table class="table">
@@ -31,6 +34,11 @@
                     @Html.DisplayNameFor(model => model.DueDate)
                 </a>
             </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PrioritySortParam"]">
+                    Priority
+                </a>
+            </th> <!-- Updated column -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -45,6 +53,9 @@
                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+                <td class="@(item.Priority == TaskManager.Models.PriorityLevel.High ? "text-danger" : item.Priority == TaskManager.Models.PriorityLevel.Medium ? "text-warning" : "text-success")">
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td> <!-- Updated data -->
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -53,3 +64,11 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        document.querySelector("#theme-toggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-theme");
+        });
+    </script>
+}

@@ -24,6 +24,11 @@
                 <label asp-for="DueDate" class="control-label"></label>
                 <input asp-for="DueDate" class="form-control" />
             </div>
+            <div class="form-group">
+                <label asp-for="Priority" class="control-label"></label>
+                <select asp-for="Priority" class="form-control" asp-items="Html.GetEnumSelectList<TaskManager.Models.PriorityLevel>()"></select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsCompleted" /> @Html.DisplayNameFor(model => model.IsCompleted)
