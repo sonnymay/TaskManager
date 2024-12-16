@@ -34,6 +34,17 @@
            </div>
        </nav>
    </header>
+
+   <div class="info-bar bg-light py-2">
+       <div class="container d-flex justify-content-between align-items-center">
+           <div id="clock" class="text-dark"></div>
+           <div id="location-weather" class="d-flex align-items-center">
+               <div id="location" class="me-3"></div>
+               <div id="weather"></div>
+           </div>
+       </div>
+   </div>
+
    <div class="container">
        <main role="main" class="pb-3">
            @RenderBody()
@@ -48,6 +59,70 @@
    <script src="~/lib/jquery/dist/jquery.min.js"></script>
    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
    <script src="~/js/site.js" asp-append-version="true"></script>
+   <script>
+       // Update clock
+       function updateClock() {
+           const now = new Date();
+           const timeString = now.toLocaleTimeString();
+           document.getElementById('clock').textContent = timeString;
+       }
+
+       // Update clock every second
+       setInterval(updateClock, 1000);
+       updateClock(); // Initial call
+
+       // Set loading states
+       document.getElementById('location').textContent = "Loading location...";
+       document.getElementById('weather').textContent = "Loading weather...";
+
+       // Get location and weather
+       if (navigator.geolocation) {
+           navigator.geolocation.getCurrentPosition(
+               position => {
+                   const latitude = position.coords.latitude;
+                   const longitude = position.coords.longitude;
+
+                   // Get location name using reverse geocoding
+                   fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=4dbf9169dc66bc5579cb826685cbd2d7`)
+                       .then(response => response.json())
+                       .then(data => {
+                           const city = data[0].name;
+                           const state = data[0].state;
+                           document.getElementById('location').textContent = `📍 ${city}, ${state}`;
+                       });
+
+                   // Get weather
+                   fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=4dbf9169dc66bc5579cb826685cbd2d7`)
+                       .then(response => response.json())
+                       .then(data => {
+                           const temp = Math.round(data.main.temp);
+                           const feelsLike = Math.round(data.main.feels_like);
+                           const humidity = data.main.humidity;
+                           const windSpeed = Math.round(data.wind.speed);
+                           const description = data.weather[0].description;
+                           const icon = data.weather[0].icon;
+                           
+                           document.getElementById('weather').innerHTML = `
+                               <div class="d-flex align-items-center">
+                                   <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon" class="weather-icon me-2">
+                                   <div>
+                                       <span class="temp">${temp}°F</span>
+                                       <span class="description">${description}</span>
+                                       <div class="weather-details">
+                                           <small>Feels like: ${feelsLike}°F | Humidity: ${humidity}% | Wind: ${windSpeed} mph</small>
+                                       </div>
+                                   </div>
+                               </div>
+                           `;
+                       });
+               },
+               error => {
+                   document.getElementById('location').textContent = "Location unavailable";
+                   document.getElementById('weather').textContent = "Weather unavailable";
+               }
+           );
+       }
+   </script>
    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -293,3 +293,156 @@ body.dark-theme .form-control {
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+.info-bar {
+  border-bottom: 1px solid #dee2e6;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#clock {
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+#location-weather {
+  color: #666;
+}
+
+body.dark-theme .info-bar {
+  background-color: #2d2d2d !important;
+  color: #fff !important;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme #location-weather {
+  color: #ccc;
+}
+
+body.dark-theme #clock {
+  color: #fff;
+}
+
+body.dark-theme .info-bar {
+  background-color: #2d2d2d !important;
+  color: #fff !important;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme #location-weather {
+  color: #ccc;
+}
+
+body.dark-theme #clock {
+  color: #fff;
+}
+
+body.dark-theme .info-bar {
+  background-color: #2d2d2d !important;
+  color: #fff !important;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme #location-weather {
+  color: #ccc;
+}
+
+body.dark-theme #clock {
+  color: #fff;
+}
+
+#clock, #location, #weather {
+  transition: color 0.3s;
+}
+
+body.dark-theme #clock,
+body.dark-theme #location,
+body.dark-theme #weather {
+  color: #fff !important;
+}
+
+.weather-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.temp {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.description {
+  text-transform: capitalize;
+}
+
+.weather-details {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+body.dark-theme .weather-details {
+  color: #aaa;
+}
+
+/* Dark theme styles */
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark-theme .table {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+body.dark-theme .table-header th {
+    background-color: #333333 !important;
+    color: #ffffff !important;
+    border-color: #404040;
+}
+
+body.dark-theme .table-row td {
+    color: #ffffff !important;
+    border-color: #404040;
+}
+
+body.dark-theme .text-light {
+    color: #ffffff !important;
+}
+
+body.dark-theme .text-primary {
+    color: #66b3ff !important;
+}
+
+body.dark-theme .text-danger {
+    color: #ff6b6b !important;
+}
+
+body.dark-theme .text-warning {
+    color: #ffd93d !important;
+}
+
+body.dark-theme .text-success {
+    color: #6bff6b !important;
+}
+
+body.dark-theme .form-check-input {
+    background-color: #404040;
+    border-color: #666666;
+}
+
+body.dark-theme .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Hover effects */
+body.dark-theme .table-row:hover {
+    background-color: #404040 !important;
+}
+
+body.dark-theme .table a:hover {
+    opacity: 0.8;
+}
